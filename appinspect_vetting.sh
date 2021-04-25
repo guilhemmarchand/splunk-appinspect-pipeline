@@ -34,7 +34,7 @@
 
 # show usage
 show_usage() {
-    echo -e "${blue}\n\nUsage: ./${0} --username=<splunk_base_login> --password=<splunk_base_password> --app=<tgz_app_archive> --included_tags=<appinspect_included_tags> --excluded_tags=<appinspect_excluded_tags> --excluded_checks=<appinspect_excluded_checks>\n\n"
+    echo -e "${blue}\n\nUsage: ${0} --username=<splunk_base_login> --password=<splunk_base_password> --app=<tgz_app_archive> --included_tags=<appinspect_included_tags> --excluded_tags=<appinspect_excluded_tags> --excluded_checks=<appinspect_excluded_checks>\n\n"
 }
 
 # get arguments
