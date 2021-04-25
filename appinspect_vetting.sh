@@ -211,6 +211,7 @@ if [ $EXIT_CODE -eq 0 ]; then
         echo "$info" | jq .
 
         # Get the list of failures, if any
+        failures_list=""
         failures_list=$(curl -X GET \
             -s \
             -H "Authorization: bearer ${appinspect_token}" \
@@ -220,13 +221,18 @@ if [ $EXIT_CODE -eq 0 ]; then
         failures_included_count=0
         failures_excluded_count=0
 
-        # included count
-        failures_included_count_exec=$(echo "$failures_list" | grep -c -v -E "$excluded_checks_4grep")
-        ((failures_included_count = failures_included_count + "$failures_included_count_exec"))
+        # if we have failures
+        if [ ! -z "$failures_list" ]; then
 
-        # excluded count
-        failures_excluded_count_exec=$(echo "$failures_list" | grep -c -E "$excluded_checks_4grep")
-        ((failures_excluded_count = failures_excluded_count + "$failures_excluded_count_exec"))
+            # included count
+            failures_included_count_exec=$(echo "$failures_list" | grep -c -v -E "$excluded_checks_4grep")
+            ((failures_included_count = failures_included_count + "$failures_included_count_exec"))
+
+            # excluded count
+            failures_excluded_count_exec=$(echo "$failures_list" | grep -c -E "$excluded_checks_4grep")
+            ((failures_excluded_count = failures_excluded_count + "$failures_excluded_count_exec"))
+
+        fi
 
         # Inform if we had failures we are ignoring
         if [ "$failures_excluded_count" -ne 0 ]; then
