@@ -183,7 +183,7 @@ if [ $EXIT_CODE -eq 0 ]; then
         -H "Authorization: bearer ${appinspect_token}" \
         --url https://appinspect.splunk.com/v1/app/validate/status/"${uuid}" | jq -r .status)
 
-    while [ "$status" != "SUCCESS" ]; do
+    while [ "$status" = "PROCESSING" ]; do
 
         echo -e "${blue}\nINFO: appinspect is currently running:${reset}\n\n"
         curl -X GET \
